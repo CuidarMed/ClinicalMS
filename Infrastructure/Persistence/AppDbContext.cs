@@ -31,7 +31,7 @@ namespace Infrastructure.Persistence
                 entity.Property(a => a.Description).IsRequired();
                 entity.Property(a => a.StartDate).IsRequired();
                 entity.Property(a => a.EndTime).IsRequired();
-                entity.Property(a => a.status).IsRequired();
+                entity.Property(a => a.Status).IsRequired();
                 entity.Property(a => a.CreatedAt).IsRequired();
             });
 

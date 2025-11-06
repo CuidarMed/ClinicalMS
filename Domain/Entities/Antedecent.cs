@@ -28,7 +28,7 @@ namespace Domain.Entities
         public DateTime? EndTime { get; set; }
         
         [Required]
-        public string status { get; set; }
+        public string Status { get; set; }
         
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
         
