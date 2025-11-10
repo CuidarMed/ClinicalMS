@@ -1,4 +1,8 @@
+using Application.Interfaces;
+using Application.Services;
+using Infrastructure.Command;
 using Infrastructure.Persistence;
+using Infrastructure.Queries;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +18,16 @@ builder.Services.AddSwaggerGen();
 // Obtengo la cadena de texto
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+// ------- Command ---------
+builder.Services.AddScoped<IEncounterCommand, EncouterCommand>();
+
+// ------- Query ---------
+builder.Services.AddScoped<IEncountersQuery, EncounterQuery>();
+
+// ------- Services Encounter --------
+builder.Services.AddScoped<ISearchEncounterService, SearchEncounterService>();
+builder.Services.AddScoped<ISignEncouterService, SignEncounterService>();
 
 var app = builder.Build();
 

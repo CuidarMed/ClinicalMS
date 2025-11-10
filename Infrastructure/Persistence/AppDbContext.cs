@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure.Seeds;
 
 namespace Infrastructure.Persistence
 {
@@ -69,6 +70,13 @@ namespace Infrastructure.Persistence
                 entity.Property(a => a.Notes).IsRequired();
                 entity.Property(a => a.CreatedAt).IsRequired();
             });
+
+            modelBuilder.Entity<Attachment>()
+                .HasOne(a => a.encounter)
+                .WithMany(e => e.attachments)
+                .HasForeignKey(a => a.EncounterId);
+
+            modelBuilder.ApplyConfiguration(new SeedEncounter());
         }
     }
 }
