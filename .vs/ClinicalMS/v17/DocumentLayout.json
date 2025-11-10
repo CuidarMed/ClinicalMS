@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\capgo\\OneDrive\\Escritorio\\Frelance\\Facultad\\ProyectoSoftware\\CuidarMed\\ClinicalMS\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{F2ACC60F-3ACE-4541-A300-78B0465D7BD3}|Application\\Application.csproj|c:\\users\\capgo\\onedrive\\escritorio\\frelance\\facultad\\proyectosoftware\\cuidarmed\\clinicalms\\application\\services\\getattachmentbypatientservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F2ACC60F-3ACE-4541-A300-78B0465D7BD3}|Application\\Application.csproj|solutionrelative:application\\services\\getattachmentbypatientservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -23,19 +18,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "GetAttachmentByPatientService.cs",
-              "DocumentMoniker": "C:\\Users\\capgo\\OneDrive\\Escritorio\\Frelance\\Facultad\\ProyectoSoftware\\CuidarMed\\ClinicalMS\\Application\\Services\\GetAttachmentByPatientService.cs",
-              "RelativeDocumentMoniker": "Application\\Services\\GetAttachmentByPatientService.cs",
-              "ToolTip": "C:\\Users\\capgo\\OneDrive\\Escritorio\\Frelance\\Facultad\\ProyectoSoftware\\CuidarMed\\ClinicalMS\\Application\\Services\\GetAttachmentByPatientService.cs",
-              "RelativeToolTip": "Application\\Services\\GetAttachmentByPatientService.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAgwBkAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T20:21:12.409Z",
-              "EditorCaption": ""
             }
           ]
         }
