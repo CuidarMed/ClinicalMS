@@ -28,6 +28,7 @@ namespace Application.Services
 
             if (encounter.Status == "Open")
                 throw new Exception("La cita esta en curso o todavia no se realizo");
+
             else
                 return await Task.FromResult(new EncounterResponse(
                         EncounterId: encounter.EncounterId,

@@ -26,6 +26,9 @@ namespace Application.Services
             if (encounter == null)
                 throw new Exception("Cita no encontrada");
 
+            if (encounter.Status != "Open")
+                throw new Exception("La cita ya fue firmada y no puede modificarse");
+
             await _command.SignEncounter(id, doctorId, sign);
 
             encounter = await _query.GetEnocunterById(id);
