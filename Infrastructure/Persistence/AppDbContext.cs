@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Infrastructure.Seeds;
 
 namespace Infrastructure.Persistence
 {
@@ -75,8 +74,6 @@ namespace Infrastructure.Persistence
                 .HasOne(a => a.encounter)
                 .WithMany(e => e.attachments)
                 .HasForeignKey(a => a.EncounterId);
-
-            modelBuilder.ApplyConfiguration(new SeedEncounter());
         }
     }
 }

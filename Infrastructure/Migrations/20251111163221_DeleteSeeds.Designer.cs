@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251107174452_EncouterValours")]
-    partial class EncouterValours
+    [Migration("20251111163221_DeleteSeeds")]
+    partial class DeleteSeeds
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,59 +172,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("EncounterId");
 
                     b.ToTable("Encounters", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            EncounterId = 1,
-                            AppointmentId = 1L,
-                            Assessment = "El dolor fue generado por aire que se concentro en la espalda",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 8, 20, 8, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            Date = new DateTime(2025, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 3L,
-                            Notes = "Ninguna",
-                            Objetive = "El dolor es generado por aire",
-                            PateientId = 1L,
-                            Plan = "Pasar azufre sobre la zona afectada",
-                            Reasons = "Dolor de espalda",
-                            Status = "Open",
-                            Subjective = "Dolor intenso arriba a un costado de la espalda",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2025, 8, 20, 8, 15, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
-                        },
-                        new
-                        {
-                            EncounterId = 2,
-                            AppointmentId = 2L,
-                            Assessment = "El dolor de cabeza debido a fiebre. El paciente tiene una temperatura de 38°",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 9, 11, 10, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            Date = new DateTime(2025, 9, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 1L,
-                            Notes = "Ninguna",
-                            Objetive = "Resfrio",
-                            PateientId = 4L,
-                            Plan = "reposo y tomar antigripal cada 12hs",
-                            Reasons = "Dolor de cabeza",
-                            Status = "Signed",
-                            Subjective = "Dolor de cabeza",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2025, 9, 11, 10, 20, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
-                        },
-                        new
-                        {
-                            EncounterId = 3,
-                            AppointmentId = 3L,
-                            Assessment = "El paciente se contagio de un resfriado",
-                            CreatedAt = new DateTimeOffset(new DateTime(2025, 10, 15, 15, 10, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            Date = new DateTime(2025, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 2L,
-                            Notes = "Ninguna",
-                            Objetive = "Resfrio",
-                            PateientId = 2L,
-                            Plan = "Resposo, tomar un antigripal cada 8hs y realizar vapores para sacar los mocos",
-                            Reasons = "Tos y mocos",
-                            Status = "Signed",
-                            Subjective = "Tos fuerte y acumulacion de mocos",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2025, 10, 15, 15, 30, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Attachment", b =>
