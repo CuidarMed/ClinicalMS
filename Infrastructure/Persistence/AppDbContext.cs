@@ -41,7 +41,7 @@ namespace Infrastructure.Persistence
                 entity.ToTable("Encounters");
                 entity.HasKey(e => e.EncounterId);
                 entity.Property(e => e.EncounterId).ValueGeneratedOnAdd();
-                entity.Property(e => e.PateientId).IsRequired();
+                entity.Property(e => e.PatientId).IsRequired();
                 entity.Property(e => e.DoctorId).IsRequired();
                 entity.Property(e => e.AppointmentId).IsRequired();
                 entity.Property(e => e.Reasons).IsRequired().HasMaxLength(225);

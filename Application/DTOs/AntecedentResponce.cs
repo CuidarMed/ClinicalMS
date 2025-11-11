@@ -14,7 +14,7 @@ namespace Application.DTOs
         string Category,
         string Description,
         DateTime StratDate,
-        DateTime EndDate,
+        DateTime? EndDate,
         string Status,
         DateTimeOffset CreatedAt,
         DateTimeOffset UpdatedAt
