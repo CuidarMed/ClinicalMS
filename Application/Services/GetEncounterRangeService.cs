@@ -27,7 +27,10 @@ namespace Application.Services
              
             var filtered = encounters
                 .Where(e => e.Date >= from && e.Date <= to)
-                .Where(e => e.Status == "OPEN" || e.Status == "SIGNED")
+                // Incluir todos los estados válidos: COMPLETED, SIGNED, OPEN
+                // COMPLETED es el estado que se usa cuando se completa una consulta
+                .Where(e => e.Status == "OPEN" || e.Status == "SIGNED" || e.Status == "COMPLETED" || 
+                           e.Status == "open" || e.Status == "signed" || e.Status == "completed")
                 .ToList();
 
             

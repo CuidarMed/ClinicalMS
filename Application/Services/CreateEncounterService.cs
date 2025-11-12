@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Exceptions;
 using Application.Interfaces;
 using Domain.Entities;
 using System;
@@ -12,13 +13,23 @@ namespace Application.Services
     public class CreateEncounterService : ICreateEncounterService
     {
         private readonly IEncounterCommand command;
+        private readonly IEncounterQuery query;
 
-        public CreateEncounterService(IEncounterCommand command)
+        public CreateEncounterService(IEncounterCommand command, IEncounterQuery query)
         {
             this.command = command;
+            this.query = query;
         }
         public async Task<EncounterResponse> CreateAsync(CreateEncounterRequest request)
         {
+            // Verificar si ya existe un encounter para este appointment
+            var existingEncounters = await query.GetByAppointmentIdAsync(request.AppointmentId);
+            if (existingEncounters != null && existingEncounters.Any())
+            {
+                var existingEncounter = existingEncounters.First();
+                throw new ConflictException($"Ya existe un encuentro clínico para este turno (EncounterId: {existingEncounter.EncounterId}). No se puede crear otro.");
+            }
+
             var encounter = new Encounter
             {
                 PatientId = request.PatientId,
@@ -33,7 +44,7 @@ namespace Application.Services
                 Status = request.Status,
                 Date = request.Date
             };
-            var encounterId =await command.InsertAsync(encounter);
+            var encounterId = await command.InsertAsync(encounter);
             return new EncounterResponse(
                 encounterId,
                 encounter.PatientId,

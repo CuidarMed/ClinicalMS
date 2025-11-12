@@ -4,6 +4,7 @@ using Application.Interfaces;
 using Application.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ClinicalMS.Controllers
 {
@@ -26,20 +27,56 @@ namespace ClinicalMS.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<EncounterResponse>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetEncountersByRange(long patientId, DateTime from, DateTime to)
+        public async Task<IActionResult> GetEncountersByRange(
+            [FromQuery] long? patientId, 
+            [FromQuery] DateTime? from, 
+            [FromQuery] DateTime? to,
+            [FromQuery] long? appointmentId)
         {
-
             try
             {
-                var result = await _encounterRangeService.GetEncounterRangeAsync(patientId, from, to);
-                return Ok(result);
+                // Si se proporciona appointmentId, buscar por appointmentId
+                if (appointmentId.HasValue)
+                {
+                    var encounterQuery = HttpContext.RequestServices.GetRequiredService<Application.Interfaces.IEncounterQuery>();
+                    var encounters = await encounterQuery.GetByAppointmentIdAsync(appointmentId.Value);
+                    
+                    if (encounters == null || !encounters.Any())
+                        return Ok(Enumerable.Empty<EncounterResponse>());
+
+                    var response = encounters.Select(e => new EncounterResponse(
+                        e.EncounterId,
+                        e.PatientId,
+                        e.DoctorId,
+                        e.AppointmentId,
+                        e.Reasons,
+                        e.Subjective,
+                        e.Objetive,
+                        e.Assessment,
+                        e.Plan,
+                        e.Notes,
+                        e.Status,
+                        e.Date,
+                        e.CreatedAt,
+                        e.UpdatedAt
+                    ));
+                    
+                    return Ok(response);
+                }
+
+                // Si se proporciona patientId, from y to, buscar por rango
+                if (patientId.HasValue && from.HasValue && to.HasValue)
+                {
+                    var result = await _encounterRangeService.GetEncounterRangeAsync(patientId.Value, from.Value, to.Value);
+                    return Ok(result);
+                }
+
+                return BadRequest(new { message = "Debe proporcionar appointmentId o (patientId, from, to)" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
-
             }
-
         }
 
         [HttpPost]
@@ -51,6 +88,10 @@ namespace ClinicalMS.Controllers
                 var encounter = await _createEncounter.CreateAsync(request);
 
                 return Created(string.Empty, encounter);
+            }
+            catch (Application.Exceptions.ConflictException ex)
+            {
+                return Conflict(new { message = ex.Message });
             }
             catch (Exception ex)
             {

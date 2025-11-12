@@ -13,5 +13,6 @@ namespace Application.Interfaces
         Task<IEnumerable<Encounter>> GetByPatientAsync(long patientId);
         Task<List<Encounter>> GetAllEncounter();
         Task<Encounter> GetEncounterById(int encounterId);
+        Task<IEnumerable<Encounter>> GetByAppointmentIdAsync(long appointmentId);
     }
 }

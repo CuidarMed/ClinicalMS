@@ -42,5 +42,14 @@ namespace Infrastructure.Queries
                                         .FirstOrDefaultAsync(e => e.EncounterId == encounterid);
             return encounter;
         }
+
+        public async Task<IEnumerable<Encounter>> GetByAppointmentIdAsync(long appointmentId)
+        {
+            var encounters = await context.Encounters
+                .AsNoTracking()
+                .Where(e => e.AppointmentId == appointmentId)
+                .ToListAsync();
+            return encounters;
+        }
     }
 }
