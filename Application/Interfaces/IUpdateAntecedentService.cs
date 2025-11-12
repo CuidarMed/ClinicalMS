@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IAntecedentCommand
+    public interface IUpdateAntecedentService
     {
-        Task<Antecedent> CreateAsync(Antecedent antecedent);
-        Task<Antecedent?> UpdateAsync(long id, AntecedentRequest request);
+        Task<AntecedentResponse> UpdateAntecedent(long id, AntecedentRequest request);
     }
 }

@@ -14,7 +14,7 @@ namespace Domain.Entities
 
         // Relacion con Patient en DirectoryMS
         [Required]
-        public long PatientId { get; set; }
+        public long PateientId { get; set; }
         
         // Realacion con Doctor en DirectoryMS
         [Required]

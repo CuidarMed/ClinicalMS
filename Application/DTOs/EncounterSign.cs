@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs
 {
-    public record EncounterSign
-    (
-        string Sign,
-        string Notes // Opcional 
-    );
+    public class EncounterSign
+    {
+        public string Sign { get; set; }
+        public string? Notes { get; set; }    
+    }
 }

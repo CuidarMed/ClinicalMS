@@ -14,18 +14,18 @@ namespace Infrastructure.Persistence
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Antedecent> Antedecents {  get; set; }
+        public DbSet<Antecedent> Antecedents { get; set; }
         public DbSet<Encounter> Encounters { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Antecedents
-            modelBuilder.Entity<Antedecent>(entity =>
+            modelBuilder.Entity<Antecedent>(entity =>
             {
-                entity.ToTable("Antedecents");
-                entity.HasKey(a => a.AntedecentId);
-                entity.Property(a => a.AntedecentId).ValueGeneratedOnAdd();
+                entity.ToTable("Antecedent");
+                entity.HasKey(a => a.AntecedentId);
+                entity.Property(a => a.AntecedentId).ValueGeneratedOnAdd();
                 entity.Property(a => a.PatientId).IsRequired();
                 entity.Property(a => a.Category).IsRequired().HasMaxLength(200);
                 entity.Property(a => a.Description).IsRequired();
@@ -41,7 +41,7 @@ namespace Infrastructure.Persistence
                 entity.ToTable("Encounters");
                 entity.HasKey(e => e.EncounterId);
                 entity.Property(e => e.EncounterId).ValueGeneratedOnAdd();
-                entity.Property(e => e.PatientId).IsRequired();
+                entity.Property(e => e.PateientId).IsRequired();
                 entity.Property(e => e.DoctorId).IsRequired();
                 entity.Property(e => e.AppointmentId).IsRequired();
                 entity.Property(e => e.Reasons).IsRequired().HasMaxLength(225);

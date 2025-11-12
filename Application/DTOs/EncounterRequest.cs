@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs
 {
-    public record EncounterRequest
-    (
-        long AppointmentId, // Opcional
-        string Reasons,
-        string Subjective,
-        string Objetive,
-        string Assessment,
-        string Plan,
-        string Notes
-    );
+    public class EncounterRequest
+    {
+        public long AppointmentId {get; set; }
+        public string Reasons { get; set; }
+        public string Subjective { get; set; }
+        public string Objetive { get; set; }
+        public string Assessment { get; set; }
+        public string Plan { get; set; }
+        public string Notes { get; set; }
+    }
 }

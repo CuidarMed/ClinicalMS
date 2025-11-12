@@ -1,5 +1,12 @@
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Application.Interfaces;
+using Application.Services;
+using Infrastructure.Commands;
+using Infrastructure.Queries;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,11 +16,31 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 //Conexion a base de datos
 // Obtengo la cadena de texto
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+// ========== QUERIES (lectura) - Infrastructure ==========
+builder.Services.AddScoped<IAntecedentQuery, AntecedentQuery>();
+
+// ========== COMMANDS (escritura) - Infrastructure ==========
+builder.Services.AddScoped<IAntecedentCommand, AntecedentCommand>();
+
+// ========== SERVICES - Antecedent ==========
+builder.Services.AddScoped<ICreateAntecedentService, CreateAntecedentService>();
+builder.Services.AddScoped<ISearchAntecedentService, SearchAntecedentService>();
+builder.Services.AddScoped<IUpdateAntecedentService, UpdateAntecedentService>();
 
 var app = builder.Build();
 
@@ -24,9 +51,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("AllowAll");
 
 app.MapControllers();
 

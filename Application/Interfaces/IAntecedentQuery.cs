@@ -1,14 +1,11 @@
 ﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
     public interface IAntecedentQuery
     {
-        Task<Antedecent?> GetByIdAsync(int id);
+        Task<Antecedent?> GetByIdAsync(long id);
+        Task<List<Antecedent>> GetAllAsync();
+
     }
 }
