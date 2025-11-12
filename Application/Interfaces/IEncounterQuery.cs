@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IEnconunterQuery
+    public interface IEncounterQuery
     {
         Task<IEnumerable<Encounter>> GetByPatientAsync(long patientId);
+        Task<List<Encounter>> GetAllEncounter();
+        Task<Encounter> GetEncounterById(int encounterId);
     }
 }

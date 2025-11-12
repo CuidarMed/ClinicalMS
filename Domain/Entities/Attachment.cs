@@ -19,6 +19,8 @@ namespace Domain.Entities
         [Required]
         public int EncounterId { get; set; }
 
+        public Encounter encounter { get; set; }
+
         [MaxLength(80)]
         public string FileName { get; set; }
 

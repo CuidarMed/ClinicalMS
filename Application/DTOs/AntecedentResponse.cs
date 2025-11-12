@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs
 {
-    public record AntecedentResponce
+    public record AntecedentResponse
     (
         int AntecedentId,
         long PatientId,

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IGetEncounterRangeService
+    public interface ISignEncouterService
     {
-        Task<IEnumerable<EncounterResponse>> GetEncounterRangeAsync(long patientId, DateTime from, DateTime to);
+        Task<EncounterResponse> SignEncounter(int id, long doctorId, EncounterSign sign);
     }
 }

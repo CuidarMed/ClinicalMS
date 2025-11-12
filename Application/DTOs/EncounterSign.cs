@@ -8,7 +8,7 @@ namespace Application.DTOs
 {
     public record EncounterSign
     (
-        string Sign,
+        string Status,
         string Notes // Opcional 
     );
 }

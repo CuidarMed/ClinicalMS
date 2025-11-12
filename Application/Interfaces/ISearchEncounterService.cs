@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IGetEncounterRangeService
+    public interface ISearchEncounterService
     {
-        Task<IEnumerable<EncounterResponse>> GetEncounterRangeAsync(long patientId, DateTime from, DateTime to);
+        Task<EncounterResponse> SeachEncounterService(int id);
     }
 }

@@ -19,7 +19,7 @@ namespace Application.Services
             this.command = command;
             this.query = query;
         }
-        public async Task<AntecedentResponce?> DeleteAsync(int id)
+        public async Task<AntecedentResponse?> DeleteAsync(int id)
         {
             var antecedent = await query.GetByIdAsync(id);
             if (antecedent == null)
@@ -30,7 +30,7 @@ namespace Application.Services
             antecedent.Status = "eliminada";
             await command.DeleteAsync(antecedent);
 
-            return new AntecedentResponce
+            return new AntecedentResponse
             (
                 id,
                 antecedent.PatientId,

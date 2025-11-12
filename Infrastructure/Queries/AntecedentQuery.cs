@@ -4,7 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-public class AntecedentQuery :IAntecedentQuery
+public class AntecedentQuery: IAntecedentQuery
 {
     private readonly AppDbContext context;
 

@@ -11,6 +11,6 @@ namespace Application.Interfaces
 {
     public interface IGetAttachmentByPatientService 
     {
-        Task<IEnumerable<AttachmentResponce>> GetAllByPatientAsync(long patientId, int? encounterId = null);
+        Task<IEnumerable<AttachmentResponse>> GetAllByPatientAsync(long patientId, int? encounterId = null);
     }
 }

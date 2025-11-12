@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs;
+using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using System;
@@ -22,6 +23,24 @@ namespace Infrastructure.Command
             await context.Encounters.AddAsync(encounter);
             await context.SaveChangesAsync();
             return encounter.EncounterId;
+        }
+
+        public async Task SignEncounter(int id, long DoctorId, EncounterSign sign)
+        {
+            var encounter = new Encounter
+            {
+                EncounterId = id,
+                DoctorId = DoctorId,
+                Status = sign.Status,
+                Notes = sign.Notes,
+            };
+
+            context.Encounters.Attach(encounter);
+            context.Entry(encounter).Property(e => e.DoctorId).IsModified = true;
+            context.Entry(encounter).Property(e => e.Status).IsModified = true;
+            context.Entry(encounter).Property(e => e.Notes).IsModified = true;
+
+            await context.SaveChangesAsync();
         }
     }
 }

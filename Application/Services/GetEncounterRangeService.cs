@@ -11,18 +11,18 @@ namespace Application.Services
 {
     public class GetEncounterRangeService : IGetEncounterRangeService
     {
-        private readonly IEnconunterQuery query;
+        private readonly IEncounterQuery query;
 
-        public GetEncounterRangeService(IEnconunterQuery query)
+        public GetEncounterRangeService(IEncounterQuery query)
         {
             this.query = query;
         }
-        public async Task<IEnumerable<EncounterResponce>> GetEncounterRangeAsync(long patientId, DateTime from, DateTime to)
+        public async Task<IEnumerable<EncounterResponse>> GetEncounterRangeAsync(long patientId, DateTime from, DateTime to)
         {
             var encounters = await query.GetByPatientAsync(patientId);
 
             if (encounters == null || !encounters.Any())
-                return Enumerable.Empty<EncounterResponce>();
+                return Enumerable.Empty<EncounterResponse>();
 
              
             var filtered = encounters
@@ -31,7 +31,7 @@ namespace Application.Services
                 .ToList();
 
             
-            var responce = filtered.Select(e => new EncounterResponce(
+            var responce = filtered.Select(e => new EncounterResponse(
                 e.EncounterId,
                 e.PatientId,
                 e.DoctorId,

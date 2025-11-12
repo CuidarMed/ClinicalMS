@@ -17,7 +17,7 @@ namespace Application.Services
         {
             this.command = command;
         }
-        public async Task<EncounterResponce> CreateAsync(CreateEncounterRequest request)
+        public async Task<EncounterResponse> CreateAsync(CreateEncounterRequest request)
         {
             var encounter = new Encounter
             {
@@ -34,7 +34,7 @@ namespace Application.Services
                 Date = request.Date
             };
             var encounterId =await command.InsertAsync(encounter);
-            return new EncounterResponce(
+            return new EncounterResponse(
                 encounterId,
                 encounter.PatientId,
                 encounter.DoctorId,

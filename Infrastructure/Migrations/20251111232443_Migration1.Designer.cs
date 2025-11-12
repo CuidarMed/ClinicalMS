@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251107154539_SyncModelChanges")]
-    partial class SyncModelChanges
+    [Migration("20251111232443_Migration1")]
+    partial class Migration1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,7 +103,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("AttachmentId");
 
-                    b.ToTable("Attchment", (string)null);
+                    b.HasIndex("EncounterId");
+
+                    b.ToTable("Attachment", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Encounter", b =>
@@ -141,7 +143,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
-                    b.Property<long>("PateientId")
+                    b.Property<long>("PatientId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Plan")
@@ -170,6 +172,22 @@ namespace Infrastructure.Migrations
                     b.HasKey("EncounterId");
 
                     b.ToTable("Encounters", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Attachment", b =>
+                {
+                    b.HasOne("Domain.Entities.Encounter", "encounter")
+                        .WithMany("attachments")
+                        .HasForeignKey("EncounterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("encounter");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Encounter", b =>
+                {
+                    b.Navigation("attachments");
                 });
 #pragma warning restore 612, 618
         }

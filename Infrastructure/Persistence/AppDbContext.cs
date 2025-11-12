@@ -58,7 +58,7 @@ namespace Infrastructure.Persistence
 
             // Attachment
             modelBuilder.Entity<Attachment>(entity => {
-                entity.ToTable("Attchment");
+                entity.ToTable("Attachment");
                 entity.HasKey(a => a.AttachmentId);
                 entity.Property(a => a.AttachmentId).ValueGeneratedOnAdd();
                 entity.Property(a => a.PatientId).IsRequired();
@@ -69,6 +69,11 @@ namespace Infrastructure.Persistence
                 entity.Property(a => a.Notes).IsRequired();
                 entity.Property(a => a.CreatedAt).IsRequired();
             });
+
+            modelBuilder.Entity<Attachment>()
+                .HasOne(a => a.encounter)
+                .WithMany(e => e.attachments)
+                .HasForeignKey(a => a.EncounterId);
         }
     }
 }
