@@ -38,6 +38,7 @@ builder.Services.AddScoped<ICreateEncounterService, CreateEncounterService>();
 
 // ------- Services Antecedent --------
 builder.Services.AddScoped<IDeleteAntecedentService, DeleteAntecedentService>();
+builder.Services.AddScoped<IUpdateAntecedentByPatient, UpdateAntecedentByPatientService>();
 
 // ------- Services Attachment --------
 builder.Services.AddScoped<IGetAttachmentByPatientService, GetAttachmentByPatientService>();
