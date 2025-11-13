@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ClinicalMS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+32a41a56203391c769844aebf75ae61237b7a93a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cd011393fa39ca0d4f9303ecc198c0792ade4b01")]
 [assembly: System.Reflection.AssemblyProductAttribute("ClinicalMS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ClinicalMS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
