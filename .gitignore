@@ -9,6 +9,64 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# Archivos de usuario y configuración local
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Carpetas de compilación
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+[Aa]pp_Data/
+[Aa]pp_Data/
+[Aa]pp_Start/
+TestResults/
+[Aa]pp.config
+
+# Archivos generados
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Archivos temporales de MSBuild y Roslyn
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+*.GeneratedMSBuildEditorConfig.editorconfig
+
+# Archivos de publish o deploy
+publish/
+out/
+dist/
+
+# Archivos de paquetes y dependencias
+*.nupkg
+packages/
+*.nuget.props
+*.nuget.targets
+
+# Archivos de IDEs
+.idea/
+*.iml
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Git
+.gitignore
+
 # User-specific files
 *.rsuser
 *.suo
