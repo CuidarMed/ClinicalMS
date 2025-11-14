@@ -26,11 +26,13 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 // ------- Command ---------
 builder.Services.AddScoped<IEncounterCommand, EncounterCommand>();
 builder.Services.AddScoped<IAntecedentCommand, AntecedentCommand>();
+builder.Services.AddScoped<IPrescriptionCommand, PrescriptionCommand>();
 
 // ------- Query ---------
 builder.Services.AddScoped<IEncounterQuery, EncounterQuery>();
 builder.Services.AddScoped<IAttachmentQuery, AttachmentQuery>();
 builder.Services.AddScoped<IAntecedentQuery, AntecedentQuery>();
+builder.Services.AddScoped<IPrescriptionQuery, PrescriptionQuery>();
 
 
 // ------- Services Encounter --------
@@ -44,6 +46,9 @@ builder.Services.AddScoped<IDeleteAntecedentService, DeleteAntecedentService>();
 
 // ------- Services Attachment --------
 builder.Services.AddScoped<IGetAttachmentByPatientService, GetAttachmentByPatientService>();
+
+// ------- Services Prescription --------
+builder.Services.AddScoped<ICreatePrescriptionService, CreatePrescriptionService>();
 
 // ========== JWT Authentication (para validar tokens de otros microservicios) ==========
 var jwtKey = builder.Configuration["JwtSettings:key"] ?? "dev-super-secret-key-change-me";

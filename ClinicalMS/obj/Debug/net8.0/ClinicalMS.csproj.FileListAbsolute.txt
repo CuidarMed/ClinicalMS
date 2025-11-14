@@ -535,10 +535,10 @@ C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\obj\Debug\net8.0\staticw
 C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\obj\Debug\net8.0\ClinicalMS.csproj.Up2Date
 C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\obj\Debug\net8.0\ClinicalMS.dll
 C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\obj\Debug\net8.0\refint\ClinicalMS.dll
 C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\obj\Debug\net8.0\ClinicalMS.pdb
 C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\obj\Debug\net8.0\ClinicalMS.genruntimeconfig.cache
 C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\obj\Debug\net8.0\ref\ClinicalMS.dll
+C:\Users\herna\Desktop\CuidarMed+\ClinicalMS\ClinicalMS\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
