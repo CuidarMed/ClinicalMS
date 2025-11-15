@@ -199,12 +199,18 @@ namespace ClinicalMS.Controllers
             try
             {
                 if (obj == null) return null;
+
                 var prop = ((object)obj).GetType().GetProperty(propertyName);
                 if (prop == null) return null;
+
                 var value = prop.GetValue(obj);
+
                 if (value is DateTime dt) return dt;
                 if (value is DateTimeOffset dto) return dto.DateTime;
-                if (DateTime.TryParse(value?.ToString(), out var parsed)) return parsed;
+
+                if (DateTime.TryParse(value?.ToString(), out DateTime parsed))
+                    return parsed;
+
                 return null;
             }
             catch
@@ -218,12 +224,18 @@ namespace ClinicalMS.Controllers
             try
             {
                 if (obj == null) return null;
+
                 var prop = ((object)obj).GetType().GetProperty(propertyName);
                 if (prop == null) return null;
+
                 var value = prop.GetValue(obj);
+
                 if (value is DateTimeOffset dto) return dto.DateTime;
                 if (value is DateTime dt) return dt;
-                if (DateTimeOffset.TryParse(value?.ToString(), out var parsed)) return parsed.DateTime;
+
+                if (DateTimeOffset.TryParse(value?.ToString(), out DateTimeOffset parsed))
+                    return parsed.DateTime;
+
                 return null;
             }
             catch
@@ -231,6 +243,7 @@ namespace ClinicalMS.Controllers
                 return null;
             }
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEncounterById(int id)
