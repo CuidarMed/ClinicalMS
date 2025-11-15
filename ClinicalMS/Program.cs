@@ -18,6 +18,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// HttpClient para llamadas a otros microservicios
+builder.Services.AddHttpClient();
+
 //Conexion a base de datos
 // Obtengo la cadena de texto
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
