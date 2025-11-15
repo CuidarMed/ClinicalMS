@@ -9,6 +9,6 @@ namespace Application.Interfaces
 {
     public interface IGetEncounterRangeService
     {
-        Task<IEnumerable<EncounterResponce>> GetEncounterRangeAsync(long patientId, DateTime from, DateTime to);
+        Task<IEnumerable<EncounterResponse>> GetEncounterRangeAsync(long patientId, DateTime from, DateTime to);
     }
 }

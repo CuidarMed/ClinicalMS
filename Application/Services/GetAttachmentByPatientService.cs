@@ -17,7 +17,7 @@ namespace Application.Services
         {
             this.query = query;
         }
-        public async Task<IEnumerable<AttachmentResponce>> GetAllByPatientAsync(long patientId, int? encounterId = null)
+        public async Task<IEnumerable<AttachmentResponse>> GetAllByPatientAsync(long patientId, int? encounterId = null)
         {
             var attachments = await query.GetAttachmentsByPatientAsync(patientId);
 
@@ -30,7 +30,7 @@ namespace Application.Services
                 ? attachments.Where(a => a.EncounterId == encounterId.Value)
                 : attachments;
 
-            var attachmentResponces = attachments.Select(a => new AttachmentResponce
+            var attachmentResponces = attachments.Select(a => new AttachmentResponse
             (
                 a.AttachmentId,
                 a.PatientId,

@@ -9,6 +9,6 @@ namespace Application.Interfaces
 {
     public interface IDeleteAntecedentService
     {
-        Task<AntecedentResponce?> DeleteAsync(int id);
+        Task<AntecedentResponse?> DeleteAsync(int id);
     }
 }

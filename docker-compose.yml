@@ -1,0 +1,19 @@
+services:
+  clinicalms:
+    build:
+      context: .
+      dockerfile: ClinicalMS/Dockerfile
+    container_name: clinicalms_api
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__DefaultConnection: "Server=sql_server,1433;Database=CLINICAL;User Id=sa;Password=SecurePassword123!;TrustServerCertificate=True;"
+      JwtSettings__key: "dev-super-secret-key-change-me"
+    ports:
+      - "8084:8080"
+    networks:
+      - cuidarmed_new_net
+
+networks:
+  cuidarmed_new_net:
+    external: true
+

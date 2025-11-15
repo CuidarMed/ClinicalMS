@@ -1,5 +1,4 @@
 ﻿using Application.DTOs;
-using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IEnconunterQuery
+    public interface ISignEncouterService
     {
-        Task<IEnumerable<Encounter>> GetByPatientAsync(long patientId);
+        Task<EncounterResponse> SignEncounter(int id, long doctorId, EncounterSign sign);
     }
 }

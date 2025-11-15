@@ -17,6 +17,7 @@ namespace Infrastructure.Persistence
         public DbSet<Antedecent> Antedecents {  get; set; }
         public DbSet<Encounter> Encounters { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<Prescription> Prescriptions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -58,7 +59,7 @@ namespace Infrastructure.Persistence
 
             // Attachment
             modelBuilder.Entity<Attachment>(entity => {
-                entity.ToTable("Attchment");
+                entity.ToTable("Attachment");
                 entity.HasKey(a => a.AttachmentId);
                 entity.Property(a => a.AttachmentId).ValueGeneratedOnAdd();
                 entity.Property(a => a.PatientId).IsRequired();
@@ -68,6 +69,30 @@ namespace Infrastructure.Persistence
                 entity.Property(a => a.FileUrl).IsRequired();
                 entity.Property(a => a.Notes).IsRequired();
                 entity.Property(a => a.CreatedAt).IsRequired();
+            });
+
+            modelBuilder.Entity<Attachment>()
+                .HasOne(a => a.encounter)
+                .WithMany(e => e.attachments)
+                .HasForeignKey(a => a.EncounterId);
+
+            // Prescription
+            modelBuilder.Entity<Prescription>(entity =>
+            {
+                entity.ToTable("Prescriptions");
+                entity.HasKey(p => p.PrescriptionId);
+                entity.Property(p => p.PrescriptionId).ValueGeneratedOnAdd();
+                entity.Property(p => p.PatientId).IsRequired();
+                entity.Property(p => p.DoctorId).IsRequired();
+                entity.Property(p => p.Diagnosis).IsRequired().HasMaxLength(500);
+                entity.Property(p => p.Medication).IsRequired().HasMaxLength(200);
+                entity.Property(p => p.Dosage).IsRequired().HasMaxLength(100);
+                entity.Property(p => p.Frequency).IsRequired().HasMaxLength(100);
+                entity.Property(p => p.Duration).IsRequired().HasMaxLength(100);
+                entity.Property(p => p.AdditionalInstructions).HasMaxLength(1000);
+                entity.Property(p => p.PrescriptionDate).IsRequired();
+                entity.Property(p => p.CreatedAt).IsRequired();
+                entity.Property(p => p.UpdatedAt).IsRequired();
             });
         }
     }

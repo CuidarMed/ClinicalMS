@@ -11,27 +11,30 @@ namespace Application.Services
 {
     public class GetEncounterRangeService : IGetEncounterRangeService
     {
-        private readonly IEnconunterQuery query;
+        private readonly IEncounterQuery query;
 
-        public GetEncounterRangeService(IEnconunterQuery query)
+        public GetEncounterRangeService(IEncounterQuery query)
         {
             this.query = query;
         }
-        public async Task<IEnumerable<EncounterResponce>> GetEncounterRangeAsync(long patientId, DateTime from, DateTime to)
+        public async Task<IEnumerable<EncounterResponse>> GetEncounterRangeAsync(long patientId, DateTime from, DateTime to)
         {
             var encounters = await query.GetByPatientAsync(patientId);
 
             if (encounters == null || !encounters.Any())
-                return Enumerable.Empty<EncounterResponce>();
+                return Enumerable.Empty<EncounterResponse>();
 
              
             var filtered = encounters
                 .Where(e => e.Date >= from && e.Date <= to)
-                .Where(e => e.Status == "OPEN" || e.Status == "SIGNED")
+                // Incluir todos los estados válidos: COMPLETED, SIGNED, OPEN
+                // COMPLETED es el estado que se usa cuando se completa una consulta
+                .Where(e => e.Status == "OPEN" || e.Status == "SIGNED" || e.Status == "COMPLETED" || 
+                           e.Status == "open" || e.Status == "signed" || e.Status == "completed")
                 .ToList();
 
             
-            var responce = filtered.Select(e => new EncounterResponce(
+            var responce = filtered.Select(e => new EncounterResponse(
                 e.EncounterId,
                 e.PatientId,
                 e.DoctorId,

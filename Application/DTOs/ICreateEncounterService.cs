@@ -8,6 +8,6 @@ namespace Application.DTOs
 {
     public interface ICreateEncounterService
     {
-        Task<EncounterResponce> CreateAsync(CreateEncounterRequest request);
+        Task<EncounterResponse> CreateAsync(CreateEncounterRequest request);
     }
 }
