@@ -1,5 +1,6 @@
 using Application.DTOs;
 using Application.Interfaces;
+using Application.Mappings;
 using Application.Services;
 using Infrastructure.Command;
 using Infrastructure.Persistence;
@@ -42,6 +43,9 @@ builder.Services.AddScoped<IUpdateAntecedentByPatient, UpdateAntecedentByPatient
 
 // ------- Services Attachment --------
 builder.Services.AddScoped<IGetAttachmentByPatientService, GetAttachmentByPatientService>();
+
+// ------- Mapping --------
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 

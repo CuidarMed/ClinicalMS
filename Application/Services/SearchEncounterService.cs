@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace Application.Services
     public class SearchEncounterService : ISearchEncounterService
     {
         private readonly IEncounterQuery _encountersQuery;
+        private readonly IMapper _mapper;
 
-        public SearchEncounterService(IEncounterQuery encountersQuery)
+        public SearchEncounterService(IEncounterQuery encountersQuery, IMapper mapper)
         {
             _encountersQuery = encountersQuery;
+            _mapper = mapper;
         }
 
         public async Task<EncounterResponse> SeachEncounterService(int id)
@@ -30,22 +33,8 @@ namespace Application.Services
                 throw new Exception("La cita esta en curso o todavia no se realizo");
 
             else
-                return await Task.FromResult(new EncounterResponse(
-                        EncounterId: encounter.EncounterId,
-                        PatientId: encounter.PatientId,
-                        DoctorId: encounter.DoctorId,
-                        AppoinmentId: encounter.AppointmentId,
-                        Reasons: encounter.Reasons,
-                        Subjetive: encounter.Subjective,
-                        Objetive: encounter.Objetive,
-                        Assessment: encounter.Assessment,
-                        Plan: encounter.Plan,
-                        Notes: encounter.Notes,
-                        Status: encounter.Status,
-                        Date: encounter.Date,
-                        createdAt: encounter.CreatedAt,
-                        UpdatedAt: encounter.UpdatedAt
-                    ));
+                // Convierte Entidad => Responce
+                return _mapper.Map<EncounterResponse>(encounter);
         }
     }
 }

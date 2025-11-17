@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace Application.Services
     public class GetEncounterRangeService : IGetEncounterRangeService
     {
         private readonly IEncounterQuery query;
+        private readonly IMapper mapper;
 
-        public GetEncounterRangeService(IEncounterQuery query)
+        public GetEncounterRangeService(IEncounterQuery query, IMapper mapper)
         {
             this.query = query;
+            this.mapper = mapper;
         }
         public async Task<IEnumerable<EncounterResponse>> GetEncounterRangeAsync(long patientId, DateTime from, DateTime to)
         {
@@ -30,26 +33,8 @@ namespace Application.Services
                 .Where(e => e.Status == "OPEN" || e.Status == "SIGNED")
                 .ToList();
 
-            
-            var responce = filtered.Select(e => new EncounterResponse(
-                e.EncounterId,
-                e.PatientId,
-                e.DoctorId,
-                e.AppointmentId,
-                e.Reasons,
-                e.Subjective,
-                e.Objetive,
-                e.Assessment,
-                e.Plan,
-                e.Notes,
-                e.Status,
-                e.Date,
-                e.CreatedAt,
-                e.UpdatedAt
-            ));
-
-            return responce;
-
+            // Convertir Entidad => Responce
+            return mapper.Map<IEnumerable<EncounterResponse>>(encounters);
         }
     }
 }

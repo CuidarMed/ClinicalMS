@@ -10,7 +10,7 @@ namespace Application.DTOs
     (
         string Category,
         string Description,
-        DateTime StratDate,
+        DateTime StartDate,
         DateTime EndDate,
         string Status
     );

@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,13 @@ namespace Application.Services
     {
         private readonly IAntecedentCommand _command;
         private readonly IAntecedentQuery _query;
+        private readonly IMapper _mapper;
 
-        public UpdateAntecedentByPatientService(IAntecedentCommand command, IAntecedentQuery query)
+        public UpdateAntecedentByPatientService(IAntecedentCommand command, IAntecedentQuery query, IMapper mapper)
         {
             _command = command;
             _query = query;
+            _mapper = mapper;
         }
 
         public async Task<AntecedentResponse> UpdateAntecedentByPatientAsync(long patientId, int antecedentId, AntecedentUpdate update)
@@ -31,17 +34,8 @@ namespace Application.Services
 
             var updateAntecedent = await _command.updateAntecedent(antecedentId, update);
 
-            return await Task.FromResult(new AntecedentResponse(
-                    AntecedentId: updateAntecedent.AntedecentId,
-                    PatientId: updateAntecedent.PatientId,
-                    Category: updateAntecedent.Category,
-                    Description: updateAntecedent.Description,
-                    StartDate: updateAntecedent.StartDate,
-                    EndDate: updateAntecedent.EndTime,
-                    Status: updateAntecedent.Status,
-                    CreatedAt: updateAntecedent.CreatedAt,
-                    UpdatedAt: updateAntecedent.UpdatedAt
-                ));
+            // Convertir Entidad => Responce
+            return _mapper.Map<AntecedentResponse>(antecedent);
         }
     }
 }

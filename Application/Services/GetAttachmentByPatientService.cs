@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace Application.Services
     public class GetAttachmentByPatientService : IGetAttachmentByPatientService
     {
         private readonly IAttachmentQuery query;
+        private readonly IMapper mapper;
 
-        public GetAttachmentByPatientService(IAttachmentQuery query)
+        public GetAttachmentByPatientService(IAttachmentQuery query, IMapper mapper)
         {
             this.query = query;
+            this.mapper = mapper;
         }
         public async Task<IEnumerable<AttachmentResponse>> GetAllByPatientAsync(long patientId, int? encounterId = null)
         {
@@ -30,19 +33,8 @@ namespace Application.Services
                 ? attachments.Where(a => a.EncounterId == encounterId.Value)
                 : attachments;
 
-            var attachmentResponces = attachments.Select(a => new AttachmentResponse
-            (
-                a.AttachmentId,
-                a.PatientId,
-                a.EncounterId,
-                a.FileName,
-                a.FileType,
-                a.FileUrl,
-                a.Notes,
-                a.CreatedAt
-
-            ));
-            return attachmentResponces;
+            // Convertir Entidad => Responce
+            return mapper.Map<IEnumerable<AttachmentResponse>>(attachments);
         }
     }
 }

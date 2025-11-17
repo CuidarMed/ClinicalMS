@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,13 @@ namespace Application.Services
     {
         private readonly IAntecedentCommand command;
         private readonly IAntecedentQuery query;
+        private readonly IMapper mapper;
 
-        public DeleteAntecedentService(IAntecedentCommand command,IAntecedentQuery query)
+        public DeleteAntecedentService(IAntecedentCommand command,IAntecedentQuery query, IMapper mapper)
         {
             this.command = command;
             this.query = query;
+            this.mapper = mapper;
         }
         public async Task<AntecedentResponse?> DeleteAsync(int id)
         {
@@ -30,18 +33,8 @@ namespace Application.Services
             antecedent.Status = "eliminada";
             await command.DeleteAsync(antecedent);
 
-            return new AntecedentResponse
-            (
-                id,
-                antecedent.PatientId,
-                antecedent.Category,
-                antecedent.Description,
-                antecedent.StartDate,
-                antecedent.EndTime,
-                antecedent.Status,
-                antecedent.CreatedAt,
-                antecedent.UpdatedAt
-            );
+            // Convertir Entidad => Responce
+            return mapper.Map<AntecedentResponse>(antecedent);
         }
     }
 }
