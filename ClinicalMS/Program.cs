@@ -2,6 +2,8 @@ using Application.DTOs;
 using Application.Interfaces;
 using Application.Mappings;
 using Application.Services;
+using Application.Validators;
+using FluentValidation;
 using Infrastructure.Command;
 using Infrastructure.Persistence;
 using Infrastructure.Queries;
@@ -46,6 +48,11 @@ builder.Services.AddScoped<IGetAttachmentByPatientService, GetAttachmentByPatien
 
 // ------- Mapping --------
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+// ------- Validators --------
+builder.Services.AddValidatorsFromAssemblyContaining<CreateEncounterRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<EncounterSignValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<AntecedentUpdateValidator>();
 
 var app = builder.Build();
 

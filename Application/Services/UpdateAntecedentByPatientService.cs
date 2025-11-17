@@ -1,6 +1,8 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using Application.Validators;
 using AutoMapper;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +16,21 @@ namespace Application.Services
         private readonly IAntecedentCommand _command;
         private readonly IAntecedentQuery _query;
         private readonly IMapper _mapper;
+        private readonly IValidator<AntecedentUpdate> _validator;
 
-        public UpdateAntecedentByPatientService(IAntecedentCommand command, IAntecedentQuery query, IMapper mapper)
+
+        public UpdateAntecedentByPatientService(IAntecedentCommand command, IAntecedentQuery query, IMapper mapper, IValidator<AntecedentUpdate> validator)
         {
             _command = command;
             _query = query;
             _mapper = mapper;
+            _validator = validator;
         }
 
         public async Task<AntecedentResponse> UpdateAntecedentByPatientAsync(long patientId, int antecedentId, AntecedentUpdate update)
         {
+            await _validator.ValidateAndThrowAsync(update);
+
             var antecedent = await _query.GetByIdAsync(antecedentId);
 
             if (antecedent == null)

@@ -1,7 +1,9 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using Application.Validators;
 using AutoMapper;
 using Domain.Entities;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +16,19 @@ namespace Application.Services
     {
         private readonly IEncounterCommand command;
         private readonly IMapper _mapper;
+        private readonly IValidator<CreateEncounterRequest> _validator;
 
-        public CreateEncounterService(IEncounterCommand command, IMapper mapper)
+        public CreateEncounterService(IEncounterCommand command, IMapper mapper, IValidator<CreateEncounterRequest> validator)
         {
             this.command = command;
-            this._mapper = mapper;
+            _mapper = mapper;
+            _validator = validator;
         }
         public async Task<EncounterResponse> CreateAsync(CreateEncounterRequest request)
         {
+            // Validamos el request antes de procesar
+            await _validator.ValidateAndThrowAsync(request);
+
             // Convertir Request => Entidad
             var encounter = _mapper.Map<Encounter>(request);
          

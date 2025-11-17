@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
 using AutoMapper;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +15,20 @@ namespace Application.Services
         private readonly IEncounterQuery _query;
         private readonly IEncounterCommand _command;
         private readonly IMapper _mapper;
+        private readonly IValidator<EncounterSign> _validator;
 
-        public SignEncounterService(IEncounterQuery query, IEncounterCommand command, IMapper mapper)
+        public SignEncounterService(IEncounterQuery query, IEncounterCommand command, IMapper mapper, IValidator<EncounterSign> validator)
         {
             _query = query;
             _command = command;
             _mapper = mapper;
+            _validator = validator;
         }
 
         public async Task<EncounterResponse> SignEncounter(int id, long doctorId, EncounterSign sign)
         {
+            await _validator.ValidateAndThrowAsync(sign);
+
             var encounter = await _query.GetEncounterById(id);
 
             if (encounter == null)
