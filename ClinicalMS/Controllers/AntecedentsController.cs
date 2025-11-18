@@ -22,33 +22,16 @@ namespace API.Controllers.v1
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteAntedecent(long patientId, int id)
         {
-
-            try
-            {
-                var deleted = await deleteAntecedent.DeleteAsync(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+             var deleted = await deleteAntecedent.DeleteAsync(id);
+             return NoContent();
         }
 
         [HttpPatch]
         public async Task<IActionResult> UpdateAntecedent(long patientId, int antecedentId, AntecedentUpdate antecedentUpdate)
         {
-            try
-            {
-                var result = await updateAntecedent.UpdateAntecedentByPatientAsync(patientId, antecedentId, antecedentUpdate);
-                if (result == null)
-                    return NotFound(new { message = "Antecedente no encontrado" });
-
-                return new JsonResult(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            
+             var result = await updateAntecedent.UpdateAntecedentByPatientAsync(patientId, antecedentId, antecedentUpdate);
+             return new JsonResult(result);
         }
     }
 }

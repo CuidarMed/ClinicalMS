@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Exceptions;
 using Application.Interfaces;
 using AutoMapper;
 using FluentValidation;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AppValidationException = Application.Exceptions.ValidationException;
 
 namespace Application.Services
 {
@@ -27,15 +29,25 @@ namespace Application.Services
 
         public async Task<EncounterResponse> SignEncounter(int id, long doctorId, EncounterSign sign)
         {
-            await _validator.ValidateAndThrowAsync(sign);
+            var validation = await _validator.ValidateAsync(sign);
+            if (!validation.IsValid)
+            {
+                var errors = validation.Errors
+                    .GroupBy(e => e.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(e => e.ErrorMessage).ToArray()
+                    );
+                throw new AppValidationException(errors);
+            }
 
             var encounter = await _query.GetEncounterById(id);
 
             if (encounter == null)
-                throw new Exception("Cita no encontrada");
+                throw new NotFoundException("El encuentro no existe.");
 
             if (encounter.Status != "Open")
-                throw new Exception("La cita ya fue firmada y no puede modificarse");
+                throw new BusinessRulesException("El encuentro ya fue firmada y no puede modificarse.");
 
             await _command.SignEncounter(id, doctorId, sign);
 

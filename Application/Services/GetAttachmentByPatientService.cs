@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Exceptions;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
@@ -25,16 +26,14 @@ namespace Application.Services
             var attachments = await query.GetAttachmentsByPatientAsync(patientId);
 
             if (attachments == null)
-            {
-                return null;
-            }
+                throw new NotFoundException("El archivo del paciente no fue encotrado.");
 
             var filtered = encounterId.HasValue
                 ? attachments.Where(a => a.EncounterId == encounterId.Value)
                 : attachments;
 
             // Convertir Entidad => Responce
-            return mapper.Map<IEnumerable<AttachmentResponse>>(attachments);
+            return mapper.Map<IEnumerable<AttachmentResponse>>(filtered);
         }
     }
 }

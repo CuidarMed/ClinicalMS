@@ -1,13 +1,16 @@
 ﻿using Application.DTOs;
+using Application.Exceptions;
 using Application.Interfaces;
 using Application.Validators;
 using AutoMapper;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AppValidationException = Application.Exceptions.ValidationException;
 
 namespace Application.Services
 {
@@ -29,15 +32,26 @@ namespace Application.Services
 
         public async Task<AntecedentResponse> UpdateAntecedentByPatientAsync(long patientId, int antecedentId, AntecedentUpdate update)
         {
-            await _validator.ValidateAndThrowAsync(update);
+            var validation = await _validator.ValidateAsync(update);
+
+            if (!validation.IsValid)
+            {
+                var errors = validation.Errors
+                    .GroupBy(e => e.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(e => e.ErrorMessage).ToArray()
+                    );
+                throw new AppValidationException(errors);
+            }
 
             var antecedent = await _query.GetByIdAsync(antecedentId);
 
             if (antecedent == null)
-                throw new Exception("Cita no encontrada.");
+                throw new NotFoundException("El encuentro no existe.");
 
             if (patientId != antecedent.PatientId)
-                throw new Exception("El paciente dado es incorrecto");
+                throw new NotFoundException("El paciente dado es incorrecto");
 
             var updateAntecedent = await _command.updateAntecedent(antecedentId, update);
 

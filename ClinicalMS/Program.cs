@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Application.Mappings;
 using Application.Services;
 using Application.Validators;
+using ClinicalMS.Middleware;
 using FluentValidation;
 using Infrastructure.Command;
 using Infrastructure.Persistence;
@@ -61,6 +62,9 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     dbContext.Database.Migrate();
 }
+
+// ------- Middleware -------- 
+app.UseExceptionHandling();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

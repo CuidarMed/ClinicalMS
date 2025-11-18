@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Exceptions;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
@@ -25,7 +26,7 @@ namespace Application.Services
             var encounters = await query.GetByPatientAsync(patientId);
 
             if (encounters == null || !encounters.Any())
-                return Enumerable.Empty<EncounterResponse>();
+                throw new NotFoundException("El paciente no tiene encuentros.");
 
              
             var filtered = encounters
@@ -34,7 +35,7 @@ namespace Application.Services
                 .ToList();
 
             // Convertir Entidad => Responce
-            return mapper.Map<IEnumerable<EncounterResponse>>(encounters);
+            return mapper.Map<IEnumerable<EncounterResponse>>(filtered);
         }
     }
 }

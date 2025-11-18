@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Exceptions;
 using Application.Interfaces;
 using AutoMapper;
 using Domain.Entities;
@@ -26,9 +27,7 @@ namespace Application.Services
         {
             var antecedent = await query.GetByIdAsync(id);
             if (antecedent == null)
-            {
-                return null;
-            }
+                throw new NotFoundException("El encuentro no existe."); 
 
             antecedent.Status = "eliminada";
             await command.DeleteAsync(antecedent);

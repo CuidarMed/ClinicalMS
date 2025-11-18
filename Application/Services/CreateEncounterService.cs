@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AppValidationException = Application.Exceptions.ValidationException;
 
 namespace Application.Services
 {
@@ -27,12 +28,21 @@ namespace Application.Services
         public async Task<EncounterResponse> CreateAsync(CreateEncounterRequest request)
         {
             // Validamos el request antes de procesar
-            await _validator.ValidateAndThrowAsync(request);
+            var validation = await _validator.ValidateAsync(request);
+            if(!validation.IsValid) {
+                var errors = validation.Errors
+                    .GroupBy(e => e.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(e => e.ErrorMessage).ToArray()
+                    );
+                throw new AppValidationException(errors);
+            }
 
             // Convertir Request => Entidad
             var encounter = _mapper.Map<Encounter>(request);
          
-            var encounterId = await command.InsertAsync(encounter);
+            await command.InsertAsync(encounter);
            
             // Convertir Entidad => Responce
             return _mapper.Map<EncounterResponse>(encounter);

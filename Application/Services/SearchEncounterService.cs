@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Exceptions;
 using Application.Interfaces;
 using AutoMapper;
 using System;
@@ -25,12 +26,10 @@ namespace Application.Services
             var encounter = await _encountersQuery.GetEncounterById(id);
 
             if (encounter == null)
-            {
-                throw new Exception("No se encontro la cita.");
-            }
+                throw new NotFoundException("El encuentro no existe");
 
             if (encounter.Status == "Open")
-                throw new Exception("La cita esta en curso o todavia no se realizo");
+                throw new BusinessRulesException("El encuentro esta en curso o todavia no se realizo");
 
             else
                 // Convierte Entidad => Responce
