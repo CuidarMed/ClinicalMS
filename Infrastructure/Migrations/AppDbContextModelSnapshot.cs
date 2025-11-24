@@ -204,7 +204,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("EncounterId")
+                    b.Property<int>("EncounterId")
                         .HasColumnType("int");
 
                     b.Property<string>("Frequency")
