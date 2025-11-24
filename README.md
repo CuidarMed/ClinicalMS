@@ -54,7 +54,9 @@ Permite operaciones CRUD sobre estos registros y proporciona endpoints RESTful p
 1. Clonar el repositorio:
 
 ```bash
-git clone https://github.com/tu-usuario/ClinicalMS.git
+https://github.com/CuidarMed/ClinicalMS.git
+```
+```bash
 cd ClinicalMS
 ```
 2. Levantar el servicio con Docker Compose:
