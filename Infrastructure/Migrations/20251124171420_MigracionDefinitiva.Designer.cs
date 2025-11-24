@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251124170211_EntitiesMigrations")]
-    partial class EntitiesMigrations
+    [Migration("20251124171420_MigracionDefinitiva")]
+    partial class MigracionDefinitiva
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -207,7 +207,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("EncounterId")
+                    b.Property<int?>("EncounterId")
                         .HasColumnType("int");
 
                     b.Property<string>("Frequency")

@@ -5,8 +5,8 @@ services:
       dockerfile: ClinicalMS/Dockerfile
     container_name: clinicalms_api
     environment:
-      ASPNETCORE_ENVIRONMENT: "Development"
       ConnectionStrings__DefaultConnection: "Server=sql_server,1433;Database=CLINICAL;User Id=sa;Password=SecurePassword123!;TrustServerCertificate=True;"
+      ASPNETCORE_ENVIRONMENT: "Development"
       JwtSettings__key: "dev-super-secret-key-change-me"
     ports:
       - "8084:8080"

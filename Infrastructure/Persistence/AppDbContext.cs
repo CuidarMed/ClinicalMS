@@ -84,7 +84,7 @@ namespace Infrastructure.Persistence
                 entity.Property(p => p.PrescriptionId).ValueGeneratedOnAdd();
                 entity.Property(p => p.PatientId).IsRequired();
                 entity.Property(p => p.DoctorId).IsRequired();
-                entity.Property(p => p.EncounterId).IsRequired();
+                entity.Property(p => p.EncounterId);
                 entity.Property(p => p.Diagnosis).IsRequired().HasMaxLength(500);
                 entity.Property(p => p.Medication).IsRequired().HasMaxLength(200);
                 entity.Property(p => p.Dosage).IsRequired().HasMaxLength(100);
