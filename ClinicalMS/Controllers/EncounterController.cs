@@ -4,6 +4,8 @@ using Application.Interfaces;
 using Application.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace ClinicalMS.Controllers
 {
@@ -26,10 +28,28 @@ namespace ClinicalMS.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<EncounterResponse>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetEncountersByRange(long patientId, DateTime from, DateTime to)
+        public async Task<IActionResult> GetEncounters([FromQuery] long? patientId, [FromQuery] DateTime? from, [FromQuery] DateTime? to, [FromQuery] long? appointmentId)
         {
-            var result = await _encounterRangeService.GetEncounterRangeAsync(patientId, from, to);
-            return Ok(result);
+            // Si se proporciona appointmentId, buscar por appointmentId
+            if (appointmentId.HasValue)
+            {
+                var encounterQuery = HttpContext.RequestServices.GetRequiredService<IEncounterQuery>();
+                var encounters = await encounterQuery.GetByAppointmentIdAsync(appointmentId.Value);
+                
+                // Mapear a DTOs
+                var mapper = HttpContext.RequestServices.GetRequiredService<AutoMapper.IMapper>();
+                var result = encounters.Select(e => mapper.Map<EncounterResponse>(e));
+                return Ok(result);
+            }
+            
+            // Si se proporcionan patientId, from y to, buscar por rango
+            if (patientId.HasValue && from.HasValue && to.HasValue)
+            {
+                var result = await _encounterRangeService.GetEncounterRangeAsync(patientId.Value, from.Value, to.Value);
+                return Ok(result);
+            }
+            
+            return BadRequest("Debe proporcionar appointmentId o (patientId, from, to)");
         }
 
         [HttpPost]
