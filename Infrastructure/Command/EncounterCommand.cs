@@ -2,11 +2,6 @@
 using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Command
 {
@@ -41,6 +36,12 @@ namespace Infrastructure.Command
             context.Entry(encounter).Property(e => e.Notes).IsModified = true;
 
             await context.SaveChangesAsync();
+        }
+
+        public Task UpdateEncounter(Encounter encounter)
+        {
+            context.Encounters.Update(encounter);
+            return context.SaveChangesAsync();
         }
     }
 }

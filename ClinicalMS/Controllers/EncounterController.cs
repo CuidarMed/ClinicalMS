@@ -1,12 +1,6 @@
 ﻿using Application.DTOs;
-using Application.Exceptions;
 using Application.Interfaces;
-using Application.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using System.Net.Http.Json;
-using System.Reflection;
 
 namespace ClinicalMS.Controllers
 {
@@ -18,13 +12,15 @@ namespace ClinicalMS.Controllers
         private readonly ISignEncouterService _signEncouterService;
         private readonly IGetEncounterRangeService _encounterRangeService;
         private readonly ICreateEncounterService _createEncounter;
+        private readonly IUpdateEncounterService _updateEncounterService;
 
-        public EncounterController(ISearchEncounterService searchEncounterService, ISignEncouterService signEncouterService, IGetEncounterRangeService getEncounterRange, ICreateEncounterService createEncounter)
+        public EncounterController(ISearchEncounterService searchEncounterService, ISignEncouterService signEncouterService, IGetEncounterRangeService getEncounterRange, ICreateEncounterService createEncounter, IUpdateEncounterService updateEncounterService)
         {
             _searchEncounterService = searchEncounterService;
             _signEncouterService = signEncouterService;
             _encounterRangeService = getEncounterRange;
             _createEncounter = createEncounter;
+            _updateEncounterService = updateEncounterService;
         }
 
         [HttpGet]
@@ -107,6 +103,26 @@ namespace ClinicalMS.Controllers
             }
 
         }
+        [HttpPatch("{encounterId}")]
+        [ProducesResponseType(typeof(EncounterResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateEncounter(int encounterId, [FromBody] UpdateEncounterRequest request)
+        {
+            try
+            {
+                var encounter = await _updateEncounterService.UpdateAsync(encounterId, request);
+                return Ok(encounter);
+            }
+            catch (Application.Exceptions.NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
 
         private async Task GenerateHl7SummaryAsync(EncounterResponse encounter, CreateEncounterRequest request, 
             IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<EncounterController> logger)
@@ -136,9 +152,6 @@ namespace ClinicalMS.Controllers
                 // Construir request para Hl7Gateway
                 var summaryRequest = new
                 {
-                    EncounterId = encounter.EncounterId,
-                    PatientId = encounter.PatientId,
-                    DoctorId = encounter.DoctorId,
                     AppointmentId = encounter.AppoinmentId,
                     PatientDni = GetPropertyValue(patient, "dni") ?? GetPropertyValue(patient, "Dni"),
                     PatientFirstName = GetPropertyValue(patient, "firstName") ?? GetPropertyValue(patient, "FirstName"),

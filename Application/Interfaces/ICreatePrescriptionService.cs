@@ -1,6 +1,7 @@
+using Application.DTOs;
 using System.Threading.Tasks;
 
-namespace Application.DTOs
+namespace Application.Interfaces
 {
     public interface ICreatePrescriptionService
     {

@@ -1,8 +1,6 @@
 using Application.DTOs;
 using Application.Interfaces;
 using Domain.Entities;
-using System;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {

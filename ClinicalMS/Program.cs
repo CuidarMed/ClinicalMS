@@ -1,4 +1,3 @@
-using Application.DTOs;
 using Application.Interfaces;
 using Application.Services;
 using Infrastructure.Command;
@@ -41,6 +40,7 @@ builder.Services.AddScoped<ISearchEncounterService, SearchEncounterService>();
 builder.Services.AddScoped<ISignEncouterService, SignEncounterService>();
 builder.Services.AddScoped<IGetEncounterRangeService, GetEncounterRangeService>();
 builder.Services.AddScoped<ICreateEncounterService, CreateEncounterService>();
+builder.Services.AddScoped<IUpdateEncounterService, UpdateEncounterService>();
 
 // ------- Services Antecedent --------
 builder.Services.AddScoped<IDeleteAntecedentService, DeleteAntecedentService>();
